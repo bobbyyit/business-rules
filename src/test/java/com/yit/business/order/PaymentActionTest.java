@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class PaymentActionTest {
 
@@ -18,21 +18,21 @@ public class PaymentActionTest {
     }
 
     @Test
-    public void generatesPackagingSlipForPhysicalProducts() {
+    public void generatesPackagingSlipForPhysicalProductsAndCommission() {
         Payment payment = new Payment(Product.PHYSICAL, "John A. Smith");
 
         String result = paymentAction.apply(payment);
 
-        assertThat(result, is("Package slip generate for: John A. Smith"));
+        assertThat(result, is("Package slip generate for: John A. Smith, Commission payment generated"));
     }
 
     @Test
-    public void generatesPackagingSlipForBook() {
+    public void generatesPackagingSlipForBookAndCommission() {
         Payment payment = new Payment(Product.BOOK, "John A. Smith");
 
         String result = paymentAction.apply(payment);
 
-        assertThat(result, is("Package slip generate for: John A. Smith, Package slip generate for: John A. Smith"));
+        assertThat(result, is("Package slip generate for: John A. Smith, Package slip generate for: John A. Smith, Commission payment generated"));
     }
 
     @Test
