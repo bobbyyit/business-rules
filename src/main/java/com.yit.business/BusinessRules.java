@@ -4,7 +4,8 @@ import com.yit.business.handler.OrderHandler;
 import spark.Request;
 import spark.Response;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.port;
 
 public class BusinessRules {
     public static void main(String[] args) {
@@ -14,6 +15,6 @@ public class BusinessRules {
             return "You're up and running!";
         });
 
-        get("order/create", new OrderHandler());
+        get("order/create/:name/:product", new OrderHandler());
     }
 }
