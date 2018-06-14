@@ -1,5 +1,6 @@
 package com.yit.business.handler;
 
+import com.yit.business.order.PaymentAction;
 import org.junit.Before;
 import org.junit.Test;
 import spark.Request;
@@ -16,7 +17,7 @@ public class OrderHandlerTest {
 
     @Before
     public void setUp() {
-        handler = new OrderHandler();
+        handler = new OrderHandler(new PaymentAction());
         request = mock(Request.class);
         response = mock(Response.class);
     }
@@ -26,17 +27,18 @@ public class OrderHandlerTest {
         when(request.params("name")).thenReturn("John");
         when(request.params("product")).thenReturn("BOOK");
 
-        handler.handle(request, response);
+        Object responseMessage = handler.handle(request, response);
 
         verify(response).status(200);
         verify(response, times(0)).status(400);
+        assertThat(responseMessage, is("Package slip generate for: John, Package slip generate for: John, Commission payment generated"));
     }
 
     @Test
     public void returnResponseMessage() throws Exception {
         String responseMessage = (String) handler.handle(request, response);
 
-        assertThat(responseMessage, is("hello"));
+        assertThat(responseMessage, is("Bad parameters"));
     }
 
     @Test
@@ -54,5 +56,4 @@ public class OrderHandlerTest {
 
         verify(response).status(400);
     }
-
 }

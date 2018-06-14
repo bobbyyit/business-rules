@@ -1,6 +1,7 @@
 package com.yit.business;
 
 import com.yit.business.handler.OrderHandler;
+import com.yit.business.order.PaymentAction;
 import spark.Request;
 import spark.Response;
 
@@ -15,6 +16,7 @@ public class BusinessRules {
             return "You're up and running!";
         });
 
-        get("order/create/:name/:product", new OrderHandler());
+
+        get("order/create/:name/:product", new OrderHandler(new PaymentAction()));
     }
 }
